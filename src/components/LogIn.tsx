@@ -2,22 +2,16 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
+import {userInfo} from '@/utils/userYup'
+
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 export const LogIn = () => {
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
   });
   const [error, setError] = useState({ email: "", password: "" });
-  // const getData = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:5000/admin',{userInfo});
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
+  
   const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "email") {
       setUserInfo({ ...userInfo, email: e.target.value });
