@@ -2,7 +2,7 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
-import {userInfo} from '@/utils/userYup'
+import { userInfo } from "@/utils/userYup";
 
 import { useState, useEffect } from "react";
 export const LogIn = () => {
@@ -11,7 +11,7 @@ export const LogIn = () => {
     password: "",
   });
   const [error, setError] = useState({ email: "", password: "" });
-  
+
   const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "email") {
       setUserInfo({ ...userInfo, email: e.target.value });
