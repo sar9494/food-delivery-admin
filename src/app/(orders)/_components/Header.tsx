@@ -1,18 +1,19 @@
 "use client";
-import { DateButton } from "../_components/Calendar";
+import { DateButton } from "./Calendar";
 import { Button } from "@/components/ui/button";
+
 export function Header() {
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex justify-between w-full py-5">
       <div>
         <p>
           <b>Orders</b>
         </p>
         <p>sum of items</p>
       </div>
-      <div>
+      <div className="flex  justify-around gap-3">
         <DateButton />
-        <Button>Change delivery state</Button>
+        <Button className="rounded-full">Change delivery state</Button>
       </div>
     </div>
   );

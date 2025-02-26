@@ -29,19 +29,13 @@ export const DateButton = () => {
           {date ? format(date, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start">
-        <div className="">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            className="rounded-md border"
-            classNames={{
-              months: " w-full",
-              day: "h-8 w-8 p-0 font-normal aria-selected:opacity-100",
-            }}
-          />
-        </div>
+      <PopoverContent className="w-auto p-0">
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          initialFocus
+        />
       </PopoverContent>
     </Popover>
   );

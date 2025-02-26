@@ -22,7 +22,7 @@ export const LogIn = () => {
   const getData = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/admin/login",
+        "http://localhost:5000/user/login",
         userInfo
       );
       console.log(response);
