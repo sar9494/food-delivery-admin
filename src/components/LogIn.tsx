@@ -2,8 +2,6 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
-import { userInfo } from "@/utils/userYup";
-
 import { useState, useEffect } from "react";
 export const LogIn = () => {
   const [userInfo, setUserInfo] = useState({

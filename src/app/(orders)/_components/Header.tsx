@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
-    <div className="flex justify-between w-full py-5">
+    <div className="flex justify-between w-full p-5">
       <div>
         <p>
           <b>Orders</b>
