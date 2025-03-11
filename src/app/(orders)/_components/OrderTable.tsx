@@ -1,6 +1,6 @@
 import { ChevronsUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Orders } from "@/utils/ordersType";
+import { Orders } from "@/utils/types/ordersType";
 export const OrderTable = (props: Orders) => {
   const { numeration, customer, date, food, total, address, deliveryState } =
     props;

@@ -3,7 +3,7 @@ import { Truck, LayoutDashboard, Settings } from "lucide-react";
 
 export const HomeSwitchButton = ({ name }: { name: string }) => {
   return (
-    <Button className="flex w-full rounded-full">
+    <Button className="flex w-full rounded-full bg-black text-white">
       {name === "food" && (
         <>
           <LayoutDashboard />

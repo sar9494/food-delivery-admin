@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getData } from "@/utils/getOrders";
+import { getData } from "@/utils/functions/getOrders";
 import { Header } from "../_components/Header";
 import { OrderTable } from "../_components/OrderTable";
 import { TableHeader } from "../_components/TableHeader";
@@ -23,3 +23,4 @@ export const AllOrders = () => {
     </div>
   );
 };
+//cloudinary 3keys
