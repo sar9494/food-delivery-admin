@@ -13,7 +13,7 @@ export const FoodCategory = (props: {
     <div className="bg-white rounded-md p-5">
       <p>{name}</p>
       <div className="flex gap-5">
-        <AddDishButton />
+        <AddDishButton id={id} />
         {foods
           .filter((el) => el.category === id)
           .map((el, index) => {

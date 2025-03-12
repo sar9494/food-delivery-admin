@@ -1,16 +1,8 @@
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -23,8 +15,32 @@ import { Food } from "@/utils/types/types";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
-export function AddDishButton() {
-  const [foodInfo, setFoodInfo] = useState();
+export function AddDishButton(props: { id: string }) {
+  const { id } = props;
+  const [foodInfo, setFoodInfo] = useState<Food>({
+    foodName: "",
+    price: 0,
+    ingredients: "",
+    category: id,
+    image: "",
+    _id: null,
+  });
+  const infoChangesHandler = (e: {
+    target: {
+      value: string;
+      name: string;
+    };
+  }) => {
+    if (e.target.name == "name") {
+      setFoodInfo({ ...foodInfo, foodName: e.target.value });
+    } else if (e.target.name == "price") {
+      setFoodInfo({ ...foodInfo, price: parseInt(e.target.value) });
+    } else if (e.target.name == "image") {
+      setFoodInfo({ ...foodInfo, image: e.target.value });
+    } else {
+      setFoodInfo({ ...foodInfo, ingredients: e.target.value });
+    }
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -61,26 +77,6 @@ export function AddDishButton() {
             <div>
               <Label htmlFor="image">Food image</Label>
               {}
-            </div>
-            <div className="flex space-y-1.5 items-center">
-              <Label htmlFor="framework">Framework</Label>
-              <Select>
-                <SelectTrigger
-                  id="framework"
-                  className="rounded border-gray-300"
-                >
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent
-                  position="popper"
-                  className="rounded border-gray-300 bg-white"
-                >
-                  <SelectItem value="next">Next.js</SelectItem>
-                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                  <SelectItem value="astro">Astro</SelectItem>
-                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
           </div>
         </form>
