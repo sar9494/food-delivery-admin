@@ -1,9 +1,9 @@
-export type Category = { categoryName: string };
+export type Category = { categoryName: string; _id: string };
 export type Food = {
   foodName: string;
-  category: Category;
+  category: string;
   ingredients: string;
   image: string;
   price: number;
-  _id: string;
+  _id: string | null;
 };

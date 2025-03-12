@@ -1,7 +1,7 @@
 "use client";
 import { HomeNaviagtion } from "@/components/index";
 import { AllOrders } from "@/app/(orders)/_features/AllOrders";
-import { Dishes } from "./(food-menu)/_features/Dishes";
+import { MainPage } from "./(food-menu)/_features/mainPage";
 import { Profile } from "@/components/Profile";
 export default function Home() {
   return (
@@ -11,8 +11,8 @@ export default function Home() {
         <div className="w-full flex justify-end px-5">
           <Profile />
         </div>
+        <MainPage />
         {/* <AllOrders /> */}
-        <Dishes />
       </div>
     </div>
   );

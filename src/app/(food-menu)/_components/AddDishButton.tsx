@@ -19,57 +19,71 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Food } from "@/utils/types/types";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 export function AddDishButton() {
+  const [foodInfo, setFoodInfo] = useState();
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">Edit Profile</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[470px] bg-white rounded p-5">
+      <DialogContent className=" bg-white rounded p-5">
         <DialogHeader>
-          <DialogTitle>Dishes info</DialogTitle>
+          <DialogTitle>Add new Dish to</DialogTitle>
         </DialogHeader>
-        <Card className="w-[470px] border-none ">
-          <CardContent>
-            <form>
-              <div className="grid w-full items-center gap-4">
-                <div className="flex justify-between items-center">
-                  <Label htmlFor="name">Dish name</Label>
-                  <Input
-                    id="name"
-                    placeholder="Name of your project"
-                    className="rounded border-gray-300"
-                  />
-                </div>
-                <div className="flex space-y-1.5 items-center">
-                  <Label htmlFor="framework">Framework</Label>
-                  <Select>
-                    <SelectTrigger
-                      id="framework"
-                      className="rounded border-gray-300"
-                    >
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent
-                      position="popper"
-                      className="rounded border-gray-300 bg-white"
-                    >
-                      <SelectItem value="next">Next.js</SelectItem>
-                      <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                      <SelectItem value="astro">Astro</SelectItem>
-                      <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+        <form>
+          <div className="grid w-full items-center gap-4">
+            <div className="flex gap-5">
+              <div className="w-1/2">
+                <Label htmlFor="name">Dish name</Label>
+                <Input
+                  id="name"
+                  placeholder="Type food name"
+                  className="rounded border-gray-300"
+                />
               </div>
-            </form>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline">Cancel</Button>
-            <Button>Deploy</Button>
-          </CardFooter>
-        </Card>
+              <div className="w-1/2">
+                <Label htmlFor="price">Dish name</Label>
+                <Input
+                  id="price"
+                  placeholder="Enter price..."
+                  className="rounded border-gray-300"
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="ingredients">Ingredients</Label>
+              <Textarea placeholder="List ingredients..." name="ingredients" />
+            </div>
+            <div>
+              <Label htmlFor="image">Food image</Label>
+              {}
+            </div>
+            <div className="flex space-y-1.5 items-center">
+              <Label htmlFor="framework">Framework</Label>
+              <Select>
+                <SelectTrigger
+                  id="framework"
+                  className="rounded border-gray-300"
+                >
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent
+                  position="popper"
+                  className="rounded border-gray-300 bg-white"
+                >
+                  <SelectItem value="next">Next.js</SelectItem>
+                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
+                  <SelectItem value="astro">Astro</SelectItem>
+                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </form>
         <DialogFooter>
           <Button type="submit" className="bg-black text-white">
             Save changes
