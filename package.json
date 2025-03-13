@@ -25,6 +25,8 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "4.1.0",
+    "formik": "^2.4.6",
+    "formik-file-and-image-input": "^0.0.6",
     "input": "^1.0.1",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",

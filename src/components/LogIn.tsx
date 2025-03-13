@@ -2,65 +2,68 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
-import { useState, useEffect } from "react";
-export const LogIn = () => {
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState({ email: "", password: "" });
+import { useRouter } from "next/navigation";
+import { userRejex } from "../utils/rejexes/userYup";
+import { Formik } from "formik";
 
-  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "email") {
-      setUserInfo({ ...userInfo, email: e.target.value });
-    } else {
-      setUserInfo({ ...userInfo, password: e.target.value });
-    }
-  };
-  const getData = async () => {
+export const LogIn = () => {
+  const router = useRouter();
+
+  const logInHandler = async (values: { email: string; password: string }) => {
+    const { email, password } = values;
     try {
-      const response = await axios.post(
-        "http://localhost:5000/user/login",
-        userInfo
-      );
+      const response = await axios.post("http://localhost:5000/user/login", {
+        email: email,
+        password: password,
+      });
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        router.push("/");
+      }
+      if (response.data.success === false) {
+        console.log(response.data.message);
+      }
       console.log(response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  const letsGoHandler = () => {
-    const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (checkEmail.test(userInfo.email) && userInfo.password.length >= 8) {
-      getData();
-    } else if (checkEmail.test(userInfo.email)) {
-    } else if (userInfo.email.length === 0 && userInfo.password.length < 8) {
-      setError({ password: "lenght", email: "lenght" });
-    }
-  };
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
+
   return (
-    <div className="flex flex-col gap-6 w-[400px]">
-      <p>
-        <b>Log in</b>
-      </p>
-      <div className="flex flex-col gap-4">
-        <Input
-          placeholder="Enter your email address"
-          name="email"
-          onChange={handleOnChangeEmail}
-        />
-        <Input
-          placeholder="Password"
-          name="password"
-          onChange={handleOnChangeEmail}
-        />
-        <a className="underline" href="">
-          Forgot password ?
-        </a>
-      </div>
-      <Button onClick={letsGoHandler}>Let's Go</Button>
-    </div>
+    <Formik
+      validationSchema={userRejex}
+      onSubmit={logInHandler}
+      initialValues={{ email: "", password: "" }}
+    >
+      {({ values, errors, handleChange, handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-6 w-[400px]">
+            <p>
+              <b>Log in</b>
+            </p>
+            <div className="flex flex-col gap-4">
+              <Input
+                placeholder="Enter your email address"
+                name="email"
+                onChange={handleChange}
+                value={values.email}
+              />
+              <p className="text-red-500">{errors.email}</p>
+              <Input
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                value={values.password}
+              />
+              <p className="text-red-500">{errors.password}</p>
+              <a className="underline" href="">
+                Forgot password ?
+              </a>
+            </div>
+            <Button type="submit">Let's Go</Button>
+          </div>
+        </form>
+      )}
+    </Formik>
   );
 };
