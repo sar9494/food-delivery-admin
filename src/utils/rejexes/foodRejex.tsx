@@ -6,6 +6,5 @@ export const foodRejex = yup.object({
     .required("Food price is required.")
     .positive("Price must be positive."),
   ingredients: yup.string().required("Food ingredients is required."),
-  category: yup.string().required("Catgory is required."),
   image: yup.string().required("Image is required."),
 });
