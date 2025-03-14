@@ -36,37 +36,32 @@ export function AddDishButton(props: { id: string; name: string }) {
     price: number;
     ingredients: string;
     image: string;
+    category:string
   }) => {
-    const { foodName, price } = values;
+    const { foodName, price,category,image,ingredients } = values;
     try {
       const response = await axios.post("http://localhost:4000/foods", {
         foodName: foodName,
         price: price,
+        image:image,
+        ingredients:ingredients,
+        category:category
       });
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        router.push("/");
-      }
-      if (response.data.success === false) {
-        console.log(response.data.message);
-      }
+      
       console.log(response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  function setFieldValue(arg0: string, file: File) {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <Formik
       validationSchema={foodRejex}
       onSubmit={addFoodButton}
-      initialValues={{ foodName: "", price: 0, ingredients: "", image: "" }}
+      initialValues={{ foodName: "", price: 0, ingredients: "", image: "" ,category:id}}
     >
-      {({ values, errors, handleChange, handleSubmit }) => (
+      {({ values, errors , setFieldValue, handleChange, handleSubmit }) => (
         <Dialog>
           <DialogTrigger asChild>
             <Button
@@ -125,9 +120,10 @@ export function AddDishButton(props: { id: string; name: string }) {
                     <h3>Browse or Drop Image {values.image.length}</h3>
                   </label>
                   <input
+                  hidden
                     type="file"
                     accept="image/*"
-                    name="image"
+                    id="image"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
@@ -140,7 +136,7 @@ export function AddDishButton(props: { id: string; name: string }) {
               </div>
             </form>
             <DialogFooter>
-              <Button type="submit" className="bg-black text-white">
+              <Button type="submit" className="bg-black text-white" >
                 Add
               </Button>
             </DialogFooter>

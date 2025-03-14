@@ -12,7 +12,7 @@ export const LogIn = () => {
   const logInHandler = async (values: { email: string; password: string }) => {
     const { email, password } = values;
     try {
-      const response = await axios.post("http://localhost:5000/user/login", {
+      const response = await axios.post("http://localhost:4000/user/login", {
         email: email,
         password: password,
       });
@@ -46,7 +46,8 @@ export const LogIn = () => {
                 placeholder="Enter your email address"
                 name="email"
                 onChange={handleChange}
-                value={values.email}
+
+              value={values.email}
               />
               <p className="text-red-500">{errors.email}</p>
               <Input
