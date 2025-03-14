@@ -7,7 +7,7 @@ export const Dishes = (props: {
   const { foods, categories } = props;
   return (
     <div className="flex flex-col gap-5">
-      {categories.map((e, index) => {
+      {categories?.map((e, index) => {
         return (
           <FoodCategory
             key={index}

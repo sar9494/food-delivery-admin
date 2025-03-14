@@ -24,7 +24,7 @@ export function AddCategoryButton() {
     console.log(e.target.value);
   };
   const addCategoryHandler = async () => {
-    await axios.post("http://localhost:5000/category", {
+    await axios.post("http://localhost:4000/category", {
       categoryName: categoryName,
     });
   };

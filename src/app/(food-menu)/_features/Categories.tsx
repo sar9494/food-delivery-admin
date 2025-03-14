@@ -15,7 +15,13 @@ export const Categories = (props: {
       <div className="flex gap-3">
         <DishButton name="All dishes" size={foods?.length} />
         {categories?.map((el, index) => {
-          return <DishButton key={index} name={el.categoryName} size={3} />;
+          return (
+            <DishButton
+              key={index}
+              name={el.categoryName}
+              size={el.foodCount}
+            />
+          );
         })}
         <AddCategoryButton />
       </div>

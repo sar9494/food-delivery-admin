@@ -39,7 +39,7 @@ export function AddDishButton(props: { id: string; name: string }) {
   }) => {
     const { foodName, price } = values;
     try {
-      const response = await axios.post("http://localhost:5000/foods", {
+      const response = await axios.post("http://localhost:4000/foods", {
         foodName: foodName,
         price: price,
       });
@@ -120,55 +120,22 @@ export function AddDishButton(props: { id: string; name: string }) {
                   <p className="text-red-500">{errors.ingredients}</p>
                 </div>
                 <div>
-                  {values.image.length !== 0 && (
-                    <div
-                      // name="image"
-                      className="cursor-pointer w-[416px] h-[180px] bg-[#F4F4F4] rounded-md flex flex-col justify-center items-center relative"
-                    >
-                      hdf{values.image.length}
-                      <img
-                        src={values.image}
-                        className="w-full h-full rounded-md object-cover"
-                      ></img>
-                    </div>
-                  )}
-                  {values.image.length === 0 && (
-                    <>
-                      <label
-                        htmlFor="image"
-                        className="cursor-pointer w-[416px] h-[180px] bg-[#F4F4F4] rounded-md flex flex-col justify-center items-center relative"
-                      >
-                        <Image />
-                        <h3>Browse or Drop Image {values.image.length}</h3>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          name="image"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                              setFieldValue("image", file);
-                            }
-                          }}
-                        />
-                      </label>
-                      <p className="text-red-600">{errors?.image}</p>
-                    </>
-                  )}
-                  {/* <Label htmlFor="image">Food image</Label>
-                  <div>
+                  <label htmlFor="image">
                     <Image />
-                    <h3>Browse or Drop Image</h3>
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      name="image"
-                      onChange={handleChange}
-                    />
-                  </div> */}
-
-                  {}
-                  {/* <p className="text-red-500">{errors.image}</p> */}
+                    <h3>Browse or Drop Image {values.image.length}</h3>
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="image"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setFieldValue("image", file);
+                      }
+                    }}
+                  />
+                  <p className="text-red-600">{errors?.image}</p>
                 </div>
               </div>
             </form>

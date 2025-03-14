@@ -1,7 +1,9 @@
 import axios from "axios";
 export const getCategories = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/category");
+    const response = await axios.get("http://localhost:4000/category");
+    console.log(response);
+
     return response.data;
   } catch (error) {
     console.log(error);
@@ -9,7 +11,7 @@ export const getCategories = async () => {
 };
 export const getFoods = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/foods");
+    const response = await axios.get("http://localhost:4000/foods");
     return response.data;
   } catch (error) {
     console.log(error);
