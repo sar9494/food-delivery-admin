@@ -10,6 +10,7 @@ export const Dishes = (props: {
       {categories?.map((e, index) => {
         return (
           <FoodCategory
+            categories={categories}
             key={index}
             name={e.categoryName}
             id={e._id}

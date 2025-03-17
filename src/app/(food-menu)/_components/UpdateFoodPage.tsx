@@ -1,9 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
-import axios from "axios";
 import { Formik } from "formik";
-import { Plus, Image, XCircle } from "lucide-react";
-
+import { Image, XCircle, Pen, Trash } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,142 +22,101 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { foodRejex } from "@/utils/rejexes/foodRejex";
+import { Category, Food } from "@/utils/types/types";
 
-export function AddDishButton(props: { id: string; name: string }) {
-  const { id, name } = props;
+export function UpdateFoodPage(props: {
+  food: Food;
+  categories: Array<Category>;
+}) {
+  const { categories } = props;
+  const { foodName, price, ingredients, image, category } = props.food;
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-
-  const addFoodItem = async (values: {
-    foodName: string;
-    price: number;
-    ingredients: string;
-    image: string;
-  }) => {
-    try {
-      const response = await axios.post("http://localhost:4000/foods", {
-        foodName: values.foodName,
-        price: values.price,
-        image: values.image,
-        ingredients: values.ingredients,
-        category: id,
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error adding food:", error);
-    }
-  };
-
-  const uploadImageToCloudinary = async (file: File) => {
-    if (!file) return null;
-
-    setIsUploading(true);
-    try {
-      const userName = "dszot6j60";
-      const upload_preset = "saruul9484";
-      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${userName}/image/upload`;
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", upload_preset);
-
-      const response = await axios.post(cloudinaryUrl, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setIsUploading(false);
-      return response.data.secure_url;
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      setIsUploading(false);
-      return null;
-    }
-  };
 
   return (
     <Formik
       validationSchema={foodRejex}
       initialValues={{
-        foodName: "",
-        price: 0,
-        ingredients: "",
-        image: "",
+        foodName: foodName,
+        price: price,
+        ingredients: ingredients,
+        image: image,
+        category: category.name,
       }}
-      onSubmit={async (values, { resetForm }) => {
-        try {
-          let imageUrl = values.image;
-
-          if (imageFile && !values.image.startsWith("http")) {
-            imageUrl = (await uploadImageToCloudinary(imageFile)) || "";
-          }
-
-          await addFoodItem({
-            ...values,
-            image: imageUrl,
-          });
-
-          resetForm();
-        } catch (error) {
-          console.error("Form submission failed:", error);
-        }
+      onSubmit={() => {
+        console.log("asdf");
       }}
     >
       {({ values, errors, setFieldValue, handleChange, handleSubmit }) => (
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              className="w-[270px] h-[240px] border-dashed border-2 border-red-500 flex flex-col gap-5"
-            >
-              <div className="bg-red-500 p-4 rounded-full">
-                <Plus color="white" />
-              </div>
-              <p>Add new Dish to {name}</p>
-            </Button>
+            <div className="absolute bg-white rounded-full p-2 bottom-4 right-4">
+              <Pen color="red" size={16} />
+            </div>
           </DialogTrigger>
           <DialogContent className="bg-white rounded p-5">
             <DialogHeader>
-              <DialogTitle>Add new Dish to {name}</DialogTitle>
+              <DialogTitle>Dish info</DialogTitle>
             </DialogHeader>
 
             <form
               onSubmit={handleSubmit}
               className="grid w-full items-center gap-4"
             >
-              <div className="flex flex-col md:flex-row gap-5">
-                <div className="w-full md:w-1/2">
-                  <Label htmlFor="foodName">Dish name</Label>
-                  <Input
-                    id="foodName"
-                    name="foodName"
-                    placeholder="Type food name"
+              <div className="w-full  flex">
+                <Label htmlFor="foodName">Dish name</Label>
+                <Input
+                  id="foodName"
+                  name="foodName"
+                  placeholder="Type food name"
+                  className="rounded border-gray-300"
+                  onChange={handleChange}
+                  value={values.foodName}
+                />
+                {errors.foodName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.foodName}</p>
+                )}
+              </div>
+              <div className="flex">
+                <Label htmlFor="category">Dish category</Label>
+                <Select
+                  value={values.category}
+                  onValueChange={(value) => {
+                    setFieldValue("category", value);
+                  }}
+                >
+                  <SelectTrigger
+                    id="category"
                     className="rounded border-gray-300"
-                    onChange={handleChange}
-                    value={values.foodName}
-                  />
-                  {errors.foodName && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.foodName}
-                    </p>
-                  )}
-                </div>
-                <div className="w-full md:w-1/2">
-                  <Label htmlFor="price">Dish price</Label>
-                  <Input
-                    id="price"
-                    name="price"
-                    type="number"
-                    placeholder="Enter price..."
-                    className="rounded border-gray-300"
-                    onChange={handleChange}
-                    value={values.price}
-                  />
-                  {errors.price && (
-                    <p className="text-red-500 text-sm mt-1">{errors.price}</p>
-                  )}
-                </div>
+                  >
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    {categories.map((el, index) => (
+                      <SelectItem key={index} value={el._id}>
+                        {el.categoryName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.category && (
+                  <p className="text-red-500">{errors.category}</p>
+                )}
+              </div>
+              <div className="w-full flex">
+                <Label htmlFor="price">Dish price</Label>
+                <Input
+                  id="price"
+                  name="price"
+                  type="number"
+                  placeholder="Enter price..."
+                  className="rounded border-gray-300"
+                  onChange={handleChange}
+                  value={values.price}
+                />
+                {errors.price && (
+                  <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+                )}
               </div>
 
               <div>
@@ -210,7 +174,7 @@ export function AddDishButton(props: { id: string; name: string }) {
                     <img
                       src={values.image}
                       alt="Food preview"
-                      className="h-full w-full rounded border object-scale-down"
+                      className="h-full w-full rounded border object-cover"
                     />
                     <XCircle
                       color="gray"
@@ -225,11 +189,15 @@ export function AddDishButton(props: { id: string; name: string }) {
                 )}
               </div>
 
-              <DialogFooter className="mt-4">
+              <DialogFooter className="w-full mt-4 flex justify-between items-center">
+                <div>
+                  <Trash className="" color="red" />
+                </div>
                 <Button
                   type="submit"
                   className="bg-red-500 hover:bg-red-600 text-white"
                   disabled={isUploading}
+                  onClick={() => console.log(values)}
                 >
                   {isUploading ? "Uploading..." : "Add Dish"}
                 </Button>
