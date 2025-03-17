@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Formik } from "formik";
 import { Plus, Image, XCircle } from "lucide-react";
-
+import { uploadImageToCloudinary } from "@/utils/functions/uploadImage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,34 +43,6 @@ export function AddDishButton(props: { id: string; name: string }) {
     }
   };
 
-  const uploadImageToCloudinary = async (file: File) => {
-    if (!file) return null;
-
-    setIsUploading(true);
-    try {
-      const userName = "dszot6j60";
-      const upload_preset = "saruul9484";
-      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${userName}/image/upload`;
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", upload_preset);
-
-      const response = await axios.post(cloudinaryUrl, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setIsUploading(false);
-      return response.data.secure_url;
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      setIsUploading(false);
-      return null;
-    }
-  };
-
   return (
     <Formik
       validationSchema={foodRejex}
@@ -85,7 +57,8 @@ export function AddDishButton(props: { id: string; name: string }) {
           let imageUrl = values.image;
 
           if (imageFile && !values.image.startsWith("http")) {
-            imageUrl = (await uploadImageToCloudinary(imageFile)) || "";
+            imageUrl =
+              (await uploadImageToCloudinary(imageFile, setIsUploading)) || "";
           }
 
           await addFoodItem({

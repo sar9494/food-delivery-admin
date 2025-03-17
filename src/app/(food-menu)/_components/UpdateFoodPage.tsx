@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { foodRejex } from "@/utils/rejexes/foodRejex";
 import { Category, Food } from "@/utils/types/types";
+import { updateFoodInfo } from "@/utils/functions/getFoogInfo";
 
 export function UpdateFoodPage(props: {
   food: Food;
@@ -43,8 +44,8 @@ export function UpdateFoodPage(props: {
         image: image,
         category: category.name,
       }}
-      onSubmit={() => {
-        console.log("asdf");
+      onSubmit={async (values, { resetForm }) => {
+        await updateFoodInfo(values);
       }}
     >
       {({ values, errors, setFieldValue, handleChange, handleSubmit }) => (
@@ -58,7 +59,6 @@ export function UpdateFoodPage(props: {
             <DialogHeader>
               <DialogTitle>Dish info</DialogTitle>
             </DialogHeader>
-
             <form
               onSubmit={handleSubmit}
               className="grid w-full items-center gap-4"
