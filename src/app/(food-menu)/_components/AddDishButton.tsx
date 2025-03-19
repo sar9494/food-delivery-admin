@@ -72,7 +72,14 @@ export function AddDishButton(props: { id: string; name: string }) {
         }
       }}
     >
-      {({ values, errors, setFieldValue, handleChange, handleSubmit }) => (
+      {({
+        values,
+        errors,
+        setFieldValue,
+        handleChange,
+        handleSubmit,
+        touched,
+      }) => (
         <Dialog>
           <DialogTrigger asChild>
             <Button
@@ -127,7 +134,6 @@ export function AddDishButton(props: { id: string; name: string }) {
                   )}
                 </div>
               </div>
-
               <div>
                 <Label htmlFor="ingredients">Ingredients</Label>
                 <Textarea
@@ -144,7 +150,6 @@ export function AddDishButton(props: { id: string; name: string }) {
                   </p>
                 )}
               </div>
-
               <div className="space-y-2">
                 {values.image.length === 0 && (
                   <Label className="flex items-center gap-2 cursor-pointer">
@@ -165,6 +170,8 @@ export function AddDishButton(props: { id: string; name: string }) {
                       name="image"
                       onChange={(e) => {
                         const file = e.target.files?.[0];
+                        console.log(file);
+
                         if (file) {
                           setImageFile(file);
                           const reader = new FileReader();
@@ -177,7 +184,6 @@ export function AddDishButton(props: { id: string; name: string }) {
                     />
                   </Label>
                 )}
-
                 {values.image.length !== 0 && (
                   <div className="flex relative w-full h-[180px]">
                     <img
@@ -192,21 +198,15 @@ export function AddDishButton(props: { id: string; name: string }) {
                     />
                   </div>
                 )}
-
-                {errors.image && (
-                  <p className="text-red-500 text-sm">{errors.image}</p>
-                )}
+                <p className="text-red-500 text-sm">{errors.image}</p>
               </div>
-
-              <DialogFooter className="mt-4">
-                <Button
-                  type="submit"
-                  className="bg-red-500 hover:bg-red-600 text-white"
-                  disabled={isUploading}
-                >
-                  {isUploading ? "Uploading..." : "Add Dish"}
-                </Button>
-              </DialogFooter>
+              <Button
+                type="submit"
+                className="bg-red-500 hover:bg-red-600 text-white"
+                disabled={isUploading}
+              >
+                {isUploading ? "Uploading..." : "Add Dish"}
+              </Button>
             </form>
           </DialogContent>
         </Dialog>
