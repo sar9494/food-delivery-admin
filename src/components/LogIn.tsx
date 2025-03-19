@@ -16,9 +16,11 @@ export const LogIn = () => {
         email: email,
         password: password,
       });
+      console.log(response.data);
+
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-        router.push("/");
+        router.push("/food-menu");
       }
       if (response.data.success === false) {
         console.log(response.data.message);
@@ -46,8 +48,7 @@ export const LogIn = () => {
                 placeholder="Enter your email address"
                 name="email"
                 onChange={handleChange}
-
-              value={values.email}
+                value={values.email}
               />
               <p className="text-red-500">{errors.email}</p>
               <Input

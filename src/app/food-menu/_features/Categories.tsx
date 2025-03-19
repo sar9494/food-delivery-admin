@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
 import { DishButton } from "../_components/DishButton";
-import { getCategories, getFoods } from "@/utils/functions/getCategories";
 import { Category, Food } from "@/utils/types/types";
-import { AddDishButton } from "@/app/(food-menu)/_components/AddDishButton";
 import { AddCategoryButton } from "../_components/AddCategoryButton";
 export const Categories = (props: {
   foods: Array<Food>;

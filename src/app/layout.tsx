@@ -5,6 +5,8 @@ import "./globals.css";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { HomeNaviagtion } from "@/components";
+import { Profile } from "@/components/Profile";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +45,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="flex">
+          <HomeNaviagtion />
+          <div className="bg-gray-200 p-5">
+            <div className="w-full flex justify-end">
+              <Profile />
+            </div>
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
