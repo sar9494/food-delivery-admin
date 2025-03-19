@@ -8,5 +8,5 @@ export type Food = {
   ingredients: string;
   image: string;
   price: number;
-  _id: string | null;
+  _id: string;
 };

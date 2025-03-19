@@ -2,7 +2,7 @@ import { Category, Food } from "@/utils/types/types";
 import { AddDishButton } from "./AddDishButton";
 import { Pen } from "lucide-react";
 import { updateFoodInfo } from "@/utils/functions/getFoogInfo";
-import { UpdateFoodPage } from "@/app/(food-menu)/_components/UpdateFoodPage";
+import { UpdateFoodPage } from "@/app/food-menu/_components/UpdateFoodPage";
 
 export const FoodCategory = (props: {
   foods: Array<Food>;

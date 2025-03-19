@@ -23,14 +23,14 @@ import {
 } from "@/components/ui/dialog";
 import { foodRejex } from "@/utils/rejexes/foodRejex";
 import { Category, Food } from "@/utils/types/types";
-import { updateFoodInfo } from "@/utils/functions/getFoogInfo";
+import { deleteFood, updateFoodInfo } from "@/utils/functions/getFoogInfo";
 
 export function UpdateFoodPage(props: {
   food: Food;
   categories: Array<Category>;
 }) {
   const { categories } = props;
-  const { foodName, price, ingredients, image, category } = props.food;
+  const { foodName, price, ingredients, image, category, _id } = props.food;
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -42,13 +42,20 @@ export function UpdateFoodPage(props: {
         price: price,
         ingredients: ingredients,
         image: image,
-        category: category.name,
+        category: category.id,
       }}
       onSubmit={async (values, { resetForm }) => {
-        await updateFoodInfo(values);
+        await updateFoodInfo({ ...values, id: _id });
       }}
     >
-      {({ values, errors, setFieldValue, handleChange, handleSubmit }) => (
+      {({
+        values,
+        errors,
+        setFieldValue,
+        handleChange,
+        handleSubmit,
+        resetForm,
+      }) => (
         <Dialog>
           <DialogTrigger asChild>
             <div className="absolute bg-white rounded-full p-2 bottom-4 right-4">
@@ -189,18 +196,19 @@ export function UpdateFoodPage(props: {
                 )}
               </div>
 
-              <DialogFooter className="w-full mt-4 flex justify-between items-center">
-                <div>
-                  <Trash className="" color="red" />
+              <DialogFooter className="w-full mt-4 ">
+                <div className="w-full mt-4 flex justify-between items-center">
+                  <div className="p-3" onClick={() => deleteFood({ id: _id })}>
+                    <Trash color="red" />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                    disabled={isUploading}
+                  >
+                    {isUploading ? "Uploading..." : "Update"}
+                  </Button>
                 </div>
-                <Button
-                  type="submit"
-                  className="bg-red-500 hover:bg-red-600 text-white"
-                  disabled={isUploading}
-                  onClick={() => console.log(values)}
-                >
-                  {isUploading ? "Uploading..." : "Add Dish"}
-                </Button>
               </DialogFooter>
             </form>
           </DialogContent>
