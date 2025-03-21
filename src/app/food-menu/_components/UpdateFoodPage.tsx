@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
 import { Image, XCircle, Pen, Trash } from "lucide-react";
 import {
   Select,
@@ -48,14 +48,7 @@ export function UpdateFoodPage(props: {
         await updateFoodInfo({ ...values, id: _id });
       }}
     >
-      {({
-        values,
-        errors,
-        setFieldValue,
-        handleChange,
-        handleSubmit,
-        resetForm,
-      }) => (
+      {({ values, errors, setFieldValue, handleChange, handleSubmit }) => (
         <Dialog>
           <DialogTrigger asChild>
             <div className="absolute bg-white rounded-full p-2 bottom-4 right-4">
@@ -72,13 +65,11 @@ export function UpdateFoodPage(props: {
             >
               <div className="w-full  flex">
                 <Label htmlFor="foodName">Dish name</Label>
-                <Input
+                <Field
                   id="foodName"
                   name="foodName"
                   placeholder="Type food name"
                   className="rounded border-gray-300"
-                  onChange={handleChange}
-                  value={values.foodName}
                 />
                 {errors.foodName && (
                   <p className="text-red-500 text-sm mt-1">{errors.foodName}</p>
@@ -195,7 +186,6 @@ export function UpdateFoodPage(props: {
                   <p className="text-red-500 text-sm">{errors.image}</p>
                 )}
               </div>
-
               <DialogFooter className="w-full mt-4 ">
                 <div className="w-full mt-4 flex justify-between items-center">
                   <div className="p-3" onClick={() => deleteFood({ id: _id })}>
