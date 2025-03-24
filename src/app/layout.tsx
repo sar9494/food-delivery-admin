@@ -7,7 +7,11 @@ import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { HomeNaviagtion } from "@/components";
 import { Profile } from "@/components/Profile";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+import "./globals.css";
 
+const queryClient = new QueryClient();
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -51,7 +55,10 @@ export default function RootLayout({
             <div className="w-full flex justify-end">
               <Profile />
             </div>
-            {children}
+            <QueryClientProvider client={queryClient}>
+              {children}
+              <ToastContainer />
+            </QueryClientProvider>
           </div>
         </div>
       </body>

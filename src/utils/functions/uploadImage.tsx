@@ -1,11 +1,7 @@
 import axios from "axios";
-export const uploadImageToCloudinary = async (
-  file: File,
-  setIsUploading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+export const uploadImageToCloudinary = async (file: File) => {
   if (!file) return null;
 
-  setIsUploading(true);
   try {
     const userName = "dszot6j60";
     const upload_preset = "saruul9484";
@@ -21,11 +17,9 @@ export const uploadImageToCloudinary = async (
       },
     });
 
-    setIsUploading(false);
     return response.data.secure_url;
   } catch (error) {
     console.error("Image upload failed:", error);
-    setIsUploading(false);
     return null;
   }
 };
