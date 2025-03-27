@@ -4,7 +4,7 @@ import { AddCategoryModal } from "../_components/AddCategoryButton";
 import { useCategory } from "@/provider/CategoryProvider";
 export const Categories = (props: { foods: Array<Food> }) => {
   const { foods } = props;
-  const { categories, refetch, isLoading } = useCategory();
+  const { categories, isLoading } = useCategory();
 
   return (
     <div className="bg-white rounded-md p-5">
@@ -24,7 +24,7 @@ export const Categories = (props: { foods: Array<Food> }) => {
             );
           })
         )}
-        <AddCategoryModal refetch={refetch} />
+        <AddCategoryModal />
       </div>
     </div>
   );

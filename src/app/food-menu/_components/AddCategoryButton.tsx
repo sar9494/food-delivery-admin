@@ -21,13 +21,9 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useCategory } from "@/provider/CategoryProvider";
-type AddCatergoryModalProps = {
-  refetch: (
-    options?: RefetchOptions
-  ) => Promise<QueryObserverResult<any, Error>>;
-};
 
-export const AddCategoryModal = ({ refetch }: AddCatergoryModalProps) => {
+export const AddCategoryModal = () => {
+  const { refetch } = useCategory();
   const [categoryName, setCategoryName] = useState("");
   const [isPressed, setIsPressed] = useState(true);
   const queryClient = new QueryClient();
@@ -45,7 +41,7 @@ export const AddCategoryModal = ({ refetch }: AddCatergoryModalProps) => {
       });
       setIsPressed(true);
 
-      await refetch();
+      refetch();
 
       toast("🦄 Successfully added category", {
         position: "top-right",

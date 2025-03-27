@@ -31,7 +31,7 @@ export const LogIn = () => {
     }
   };
   const formik = useFormik({
-    validationSchema: { userRejex },
+    validationSchema: userRejex,
     onSubmit: logInHandler,
     initialValues: { email: "", password: "" },
   });
