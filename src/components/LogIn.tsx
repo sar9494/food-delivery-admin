@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { userRejex } from "../utils/rejexes/userYup";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 
 export const LogIn = () => {
   const router = useRouter();
@@ -30,42 +30,39 @@ export const LogIn = () => {
       console.error("Error fetching data:", error);
     }
   };
+  const formik = useFormik({
+    validationSchema: { userRejex },
+    onSubmit: logInHandler,
+    initialValues: { email: "", password: "" },
+  });
 
   return (
-    <Formik
-      validationSchema={userRejex}
-      onSubmit={logInHandler}
-      initialValues={{ email: "", password: "" }}
-    >
-      {({ values, errors, handleChange, handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-6 w-[400px]">
-            <p>
-              <b>Log in</b>
-            </p>
-            <div className="flex flex-col gap-4">
-              <Input
-                placeholder="Enter your email address"
-                name="email"
-                onChange={handleChange}
-                value={values.email}
-              />
-              <p className="text-red-500">{errors.email}</p>
-              <Input
-                placeholder="Password"
-                name="password"
-                onChange={handleChange}
-                value={values.password}
-              />
-              <p className="text-red-500">{errors.password}</p>
-              <a className="underline" href="">
-                Forgot password ?
-              </a>
-            </div>
-            <Button type="submit">Let's Go</Button>
-          </div>
-        </form>
-      )}
-    </Formik>
+    <form onSubmit={formik.handleSubmit}>
+      <div className="flex flex-col gap-6 w-[400px]">
+        <p>
+          <b>Log in</b>
+        </p>
+        <div className="flex flex-col gap-4">
+          <Input
+            placeholder="Enter your email address"
+            name="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
+          <p className="text-red-500">{formik.errors.email}</p>
+          <Input
+            placeholder="Password"
+            name="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+          <p className="text-red-500">{formik.errors.password}</p>
+          <a className="underline" href="">
+            Forgot password ?
+          </a>
+        </div>
+        <Button type="submit">Let's Go</Button>
+      </div>
+    </form>
   );
 };

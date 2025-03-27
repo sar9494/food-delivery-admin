@@ -20,6 +20,7 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useCategory } from "@/provider/CategoryProvider";
 type AddCatergoryModalProps = {
   refetch: (
     options?: RefetchOptions
@@ -30,13 +31,11 @@ export const AddCategoryModal = ({ refetch }: AddCatergoryModalProps) => {
   const [categoryName, setCategoryName] = useState("");
   const [isPressed, setIsPressed] = useState(true);
   const queryClient = new QueryClient();
-
-  const { mutate: addCategory, isPending } = useMutation({
+  const { addCategory } = useCategory();
+  const { mutate: addNewCategory, isPending } = useMutation({
     mutationFn: async ({ name }: { name: string }) => {
       setIsPressed(false);
-      await axios.post("http://localhost:4000/category", {
-        categoryName: name,
-      });
+      addCategory({ name });
     },
     onSuccess: async () => {
       // await timeout(3000);

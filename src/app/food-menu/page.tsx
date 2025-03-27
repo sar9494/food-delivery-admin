@@ -4,6 +4,7 @@ import { Category, Food } from "@/utils/types/types";
 import { getCategories, getFoods } from "@/utils/functions/getCategories";
 import { Categories } from "./_features/Categories";
 import { Dishes } from "./_features/Dishes";
+import { CategoryProvider } from "@/provider/CategoryProvider";
 export default function Home() {
   const [categories, setCategories] = useState(Array<Category>);
   const [foods, setFoods] = useState(Array<Food>);
@@ -18,9 +19,11 @@ export default function Home() {
     fetchData();
   }, []);
   return (
-    <div className="flex flex-col gap-5 pt-5">
-      <Categories foods={foods} categories={categories} />
-      <Dishes foods={foods} categories={categories} />
-    </div>
+    <CategoryProvider>
+      <div className="flex flex-col gap-5 pt-5">
+        <Categories foods={foods} />
+        <Dishes foods={foods} categories={categories} />
+      </div>
+    </CategoryProvider>
   );
 }
