@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-export const DishButton = (props: { name: string; size: number }) => {
+export const CategoryBox = (props: { name: string; size: number }) => {
   const { name, size } = props;
   return (
     <Button className="bg-white border rounded-full text-black">

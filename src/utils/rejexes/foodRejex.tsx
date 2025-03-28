@@ -8,3 +8,6 @@ export const foodRejex = yup.object({
   ingredients: yup.string().required("Food ingredients is required."),
   image: yup.string().required("Image is required."),
 });
+export const categoryRejex = yup.object({
+  categoryName: yup.string().required("Category name is required."),
+});

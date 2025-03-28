@@ -7,31 +7,25 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  QueryClient,
-  QueryObserverResult,
-  RefetchOptions,
-  useMutation,
-} from "@tanstack/react-query";
-import axios from "axios";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useCategory } from "@/provider/CategoryProvider";
+import { useFormik } from "formik";
+import { categoryRejex } from "@/utils/rejexes/foodRejex";
+import { SubmitButton } from "./SubmitButton";
 
 export const AddCategoryModal = () => {
-  const { refetch } = useCategory();
-  const [categoryName, setCategoryName] = useState("");
   const [isPressed, setIsPressed] = useState(true);
   const queryClient = new QueryClient();
   const { addCategory } = useCategory();
   const { mutate: addNewCategory, isPending } = useMutation({
-    mutationFn: async ({ name }: { name: string }) => {
+    mutationFn: async ({ categoryName }: { categoryName: string }) => {
       setIsPressed(false);
-      addCategory({ name });
+      addCategory({ categoryName: categoryName });
     },
     onSuccess: async () => {
       // await timeout(3000);
@@ -40,8 +34,6 @@ export const AddCategoryModal = () => {
         type: "active",
       });
       setIsPressed(true);
-
-      refetch();
 
       toast("🦄 Successfully added category", {
         position: "top-right",
@@ -62,6 +54,13 @@ export const AddCategoryModal = () => {
       });
     },
   });
+  const formik = useFormik({
+    validationSchema: categoryRejex,
+    initialValues: {
+      categoryName: "",
+    },
+    onSubmit: (name) => addNewCategory(name),
+  });
   return (
     <>
       {isPressed ? (
@@ -75,35 +74,26 @@ export const AddCategoryModal = () => {
             <DialogHeader>
               <DialogTitle>Add new category</DialogTitle>
             </DialogHeader>
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <div className="grid w-full items-center gap-4">
                 <div className="flex justify-between items-center">
                   <Label htmlFor="name">Category name</Label>
                   <Input
                     id="name"
+                    name="categoryName"
                     placeholder="New category name"
                     className="rounded border-gray-300"
-                    onChange={(e) => setCategoryName(e.target.value)}
-                    value={categoryName}
+                    onChange={formik.handleChange}
+                    value={formik.values.categoryName}
                   />
                 </div>
               </div>
+              <SubmitButton isPending={isPending} place="add" />
             </form>
-            <DialogFooter>
-              <button
-                className="ml-[320px] rounded-[5px] mt-[50px] bg-black text-white px-[15px] py-[10px]"
-                onClick={() => {
-                  addCategory({ name: categoryName });
-                }}
-                disabled={isPending}
-              >
-                {isPending ? "Adding..." : "Add category"}
-              </button>
-            </DialogFooter>
           </DialogContent>
         </Dialog>
       ) : (
-        <div>kjsdfdhfbsk</div>
+        <div>...</div>
       )}
     </>
   );

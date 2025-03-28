@@ -1,24 +1,12 @@
-import { Category, Food } from "@/utils/types/types";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { AddDishButton } from "../_components/AddDishButton";
-import { UpdateFoodPage } from "../_components/UpdateFoodPage";
-export const Dishes = (props: {
-  foods: Array<Food>;
-  categories: Array<Category>;
-}) => {
-  const { categories } = props;
-  const {
-    data: dishes,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["foods"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:4000/foods");
-      return response.data;
-    },
-  });
+import { Food } from "@/provider/FoodProvider";
+import { AddDishButton } from "../_components/AddDishModal";
+import { UpdateFoodPage } from "../_components/UpdateFoodModal";
+import { useCategory } from "@/provider/CategoryProvider";
+import { useFood } from "@/provider/FoodProvider";
+export const Dishes = () => {
+  const { categories } = useCategory();
+  const { foods, isLoading } = useFood();
+
   return (
     <div className="flex flex-col gap-5">
       {categories?.map((e, index) => {
@@ -26,16 +14,12 @@ export const Dishes = (props: {
           <div className="bg-white rounded-md p-5" key={index}>
             <p className="">{e.categoryName}</p>
             <div className="flex gap-5  flex-wrap">
-              <AddDishButton
-                id={e._id}
-                name={e.categoryName}
-                refetch={refetch}
-              />
+              <AddDishButton id={e._id} name={e.categoryName} />
               {isLoading ? (
                 <div>Loading ...</div>
               ) : (
-                dishes
-                  .filter((el: Food) => el.category.id === e._id)
+                foods
+                  ?.filter((el: Food) => el.category.id === e._id)
                   .map((el: Food, index: number) => {
                     return (
                       <div
@@ -48,11 +32,7 @@ export const Dishes = (props: {
                             alt=""
                             className="rounded-lg w-full object-cover"
                           />
-                          <UpdateFoodPage
-                            food={el}
-                            categories={categories}
-                            refetch={refetch}
-                          />
+                          <UpdateFoodPage food={el} />
                         </div>
                         <div>
                           <div className="flex justify-between">

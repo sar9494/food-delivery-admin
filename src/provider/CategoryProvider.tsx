@@ -17,7 +17,7 @@ type CategoryContextType = {
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<any, Error>>;
   isLoading: boolean;
-  addCategory: ({ name }: { name: string }) => void;
+  addCategory: ({ categoryName }: { categoryName: string }) => void;
 };
 const CategoryContext = createContext<CategoryContextType>(
   {} as CategoryContextType
@@ -38,10 +38,11 @@ export const CategoryProvider = ({
       return response.data;
     },
   });
-  const addCategory = ({ name }: { name: string }) => {
-    const response = axios.post("http://localhost:4000/category", {
-      categoryName: name,
+  const addCategory = async ({ categoryName }: { categoryName: string }) => {
+    const response = await axios.post("http://localhost:4000/category", {
+      categoryName: categoryName,
     });
+    await refetch();
   };
 
   return (
