@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Food } from "../types/types";
 export const getAllFood = () => {};
 export const updateFoodInfo = async (
   newInfo: {
