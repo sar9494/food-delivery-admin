@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -23,7 +24,6 @@ import {
 } from "@/components/ui/dialog";
 import { foodRejex } from "@/utils/rejexes/foodRejex";
 import { Food, useFood } from "@/provider/FoodProvider";
-import { deleteFood } from "@/utils/functions/getFoogInfo";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useCategory } from "@/provider/CategoryProvider";
@@ -31,7 +31,7 @@ import { FoodSchema } from "@/provider/FoodProvider";
 import { SubmitButton } from "./SubmitButton";
 export function UpdateFoodPage(props: { food: Food }) {
   const { categories, refetch } = useCategory();
-  const { updateFoodInfo } = useFood();
+  const { updateFoodInfo, deleteFood } = useFood();
   const { foodName, price, ingredients, image, category, _id } = props.food;
   const [isPressed, setIsPressed] = useState(true);
   const queryClient = new QueryClient();
@@ -60,6 +60,35 @@ export function UpdateFoodPage(props: { food: Food }) {
     },
     onError: (err) => {
       setIsPressed(true);
+      toast.error(err?.message || "Failed to update dish info.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    },
+  });
+  const { mutate: deleteDish } = useMutation({
+    mutationFn: async (newInfo: { id: string }) => {
+      setIsPressed(false);
+      deleteFood(newInfo);
+    },
+    onSuccess: async () => {
+      await queryClient.refetchQueries({
+        queryKey: ["foods"],
+        type: "active",
+      });
+      await refetch();
+      toast("🦄 Successfully deleted.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    },
+    onError: (err) => {
       toast.error(err?.message || "Failed to update dish info.", {
         position: "top-right",
         autoClose: 3000,
@@ -213,9 +242,15 @@ export function UpdateFoodPage(props: { food: Food }) {
               </div>
               <DialogFooter className="w-full mt-4 ">
                 <div className="w-full mt-4 flex justify-between items-center">
-                  <div className="p-3" onClick={() => deleteFood({ id: _id })}>
-                    <Trash color="red" />
-                  </div>
+                  <DialogClose>
+                    <div
+                      className="p-3"
+                      onClick={() => deleteDish({ id: _id })}
+                    >
+                      <Trash color="red" />
+                    </div>
+                  </DialogClose>
+
                   <SubmitButton place="update" isPending={isPending} />
                 </div>
               </DialogFooter>

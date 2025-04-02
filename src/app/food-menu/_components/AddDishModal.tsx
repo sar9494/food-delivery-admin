@@ -57,7 +57,7 @@ export function AddDishButton(props: { id: string; name: string }) {
       setIsPressed(true);
       await refetch();
       toast("🦄 Successfully added new dish.", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,

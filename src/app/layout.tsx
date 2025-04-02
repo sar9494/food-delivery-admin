@@ -10,6 +10,8 @@ import { Profile } from "@/components/Profile";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
+import { OrderProvider } from "@/provider/OrderProvider";
+import { LoaderProvider } from "@/provider/LoadingProvider";
 
 const queryClient = new QueryClient();
 const geistSans = Geist({
@@ -49,18 +51,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex">
-          <HomeNaviagtion />
-          <div className="bg-gray-200 p-5">
-            <div className="w-full flex justify-end">
-              <Profile />
-            </div>
-            <QueryClientProvider client={queryClient}>
-              {children}
-              <ToastContainer />
-            </QueryClientProvider>
-          </div>
-        </div>
+        <QueryClientProvider client={queryClient}>
+          <LoaderProvider>
+            <OrderProvider>
+              <div className="flex">
+                <HomeNaviagtion />
+                <div className="bg-gray-200 p-5 w-full h-screen">
+                  <div className="w-full flex justify-end">
+                    <Profile />
+                  </div>
+                  {children}
+                  <ToastContainer />
+                </div>
+              </div>
+            </OrderProvider>
+          </LoaderProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

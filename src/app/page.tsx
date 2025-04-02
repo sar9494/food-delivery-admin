@@ -1,6 +1,4 @@
 "use client";
-import { HomeNaviagtion } from "@/components/index";
-import { AllOrders } from "@/app/orders/_features/AllOrders";
 import { Profile } from "@/components/Profile";
 export default function Home() {
   return (

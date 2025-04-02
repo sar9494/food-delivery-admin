@@ -52,6 +52,7 @@ export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
     const response = await axios.delete("http://localhost:4000/foods", {
       data: param,
     });
+    await refetch();
     return response.data;
   };
   const updateFoodInfo = async (newInfo: FoodSchema) => {
