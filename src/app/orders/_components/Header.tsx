@@ -1,5 +1,4 @@
 "use client";
-import { DateButton } from "./Calendar";
 import { Button } from "@/components/ui/button";
 
 export function Header() {
@@ -12,7 +11,6 @@ export function Header() {
         <p>sum of items</p>
       </div>
       <div className="flex  justify-around gap-3">
-        <DateButton />
         <Button className="rounded-full">Change delivery state</Button>
       </div>
     </div>
