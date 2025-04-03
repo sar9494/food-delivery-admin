@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 import * as React from "react";
 import { useState } from "react";
 import { useFormik } from "formik";
