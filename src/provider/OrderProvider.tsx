@@ -20,7 +20,7 @@ type OrderContextType = {
   orders: Order[];
   refetch: (
     options?: RefetchOptions
-  ) => Promise<QueryObserverResult<any, Error>>;
+  ) => Promise<QueryObserverResult<unknown, Error>>;
   updateStatus: (newStatus: { status: string; id: string }) => Promise<void>;
 };
 const OrderContext = createContext<OrderContextType>({} as OrderContextType);

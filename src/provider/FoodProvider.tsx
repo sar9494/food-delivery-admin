@@ -29,10 +29,10 @@ type FoodContextType = {
   foods: Food[];
   refetch: (
     options?: RefetchOptions
-  ) => Promise<QueryObserverResult<any, Error>>;
+  ) => Promise<QueryObserverResult<unknown, Error>>;
   isLoading: boolean;
-  deleteFood: (param: { id: string }) => Promise<any>;
-  updateFoodInfo: (newInfo: FoodSchema) => Promise<any>;
+  deleteFood: (param: { id: string }) => Promise<unknown>;
+  updateFoodInfo: (newInfo: FoodSchema) => Promise<unknown>;
 };
 const FoodContext = createContext<FoodContextType>({} as FoodContextType);
 export const FoodProvider = ({ children }: { children: React.ReactNode }) => {

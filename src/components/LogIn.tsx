@@ -64,7 +64,7 @@ export const LogIn = () => {
             Forgot password ?
           </a>
         </div>
-        <Button type="submit">Let's Go</Button>
+        <Button type="submit">Login</Button>
       </div>
     </form>
   );

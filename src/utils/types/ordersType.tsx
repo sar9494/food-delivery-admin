@@ -1,9 +1,9 @@
 export type Orders = {
-  numeration: Number;
-  customer: String;
+  numeration: number;
+  customer: string;
   date: Date;
-  food: Number;
-  total: Number;
-  address: String;
-  deliveryState: String;
+  food: number;
+  total: number;
+  address: string;
+  deliveryState: string;
 };
