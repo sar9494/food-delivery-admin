@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState, createContext, useContext, useEffect } from "react";
+import React, { createContext, useContext } from "react";
 type UserType = {
   email: string;
   address: string;
@@ -24,29 +24,15 @@ type UserContextType = {
 const UserContext = createContext<UserContextType>({} as UserContextType);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const [user, setUser] = useState<UserType>({} as UserType);
-  const [loading, setLoading] = useState(true);
-
-  const getUserData = async () => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-
-      try {
-        const response = await gerUser(parsedUser.id);
-
-        setUser(response);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const { data: user } = useQuery({
+    queryKey: ["foods"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "https://food-delivery-service-bx3v.onrender.com/user"
+      );
+      return response.data;
+    },
+  });
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -65,7 +51,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         "https://food-delivery-service-bx3v.onrender.com/user",
         values
       );
-      getUserData();
     } catch (error) {
       console.log(error);
     }
@@ -93,7 +78,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         getUser: gerUser,
       }}
     >
-      {loading && user ? <div>...loading</div> : children}
+      {user ? <div>...loading</div> : children}
     </UserContext.Provider>
   );
 };

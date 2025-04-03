@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
 import * as React from "react";
 import { useState } from "react";
 import { useFormik } from "formik";
@@ -112,7 +110,7 @@ export function UpdateFoodPage(props: { food: Food }) {
       {isPressed ? (
         <Dialog>
           <DialogTrigger asChild>
-            <div className="absolute bg-white rounded-full p-2 bottom-4 right-4">
+            <div className="absolute bg-white rounded-full p-2 bottom-4 right-4 cursor-pointer">
               <Pen color="red" size={16} />
             </div>
           </DialogTrigger>
