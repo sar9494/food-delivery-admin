@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ChevronDown } from "lucide-react";
-import Image from "next/image";
 
 export const FoodOrderItems = (props: {
   items: {
@@ -29,7 +29,7 @@ export const FoodOrderItems = (props: {
               <div className="flex items-center justify-between" key={index}>
                 <div className="flex items-center gap-2">
                   <div className="w-[50px] h-[50px] rounded-md overflow-hidden">
-                    <Image src={item.image} className="w-full h-full" alt="" />
+                    <img src={item.image} className="w-full h-full" alt="" />
                   </div>
                   <p>{item.foodName}</p>
                 </div>
