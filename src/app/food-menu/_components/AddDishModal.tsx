@@ -40,13 +40,16 @@ export function AddDishButton(props: { id: string; name: string }) {
       image: string;
     }) => {
       setIsPressed(false);
-      await axios.post("http://localhost:4000/foods", {
-        foodName: foodName,
-        price: price,
-        image: image,
-        ingredients: ingredients,
-        category: id,
-      });
+      await axios.post(
+        "https://food-delivery-service-bx3v.onrender.com/foods",
+        {
+          foodName: foodName,
+          price: price,
+          image: image,
+          ingredients: ingredients,
+          category: id,
+        }
+      );
     },
 
     onSuccess: async () => {

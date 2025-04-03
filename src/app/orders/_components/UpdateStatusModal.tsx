@@ -33,7 +33,7 @@ const frameworks = [
   },
 ];
 
-export const UpdateStatusButton = (props: { status: string; id: string }) => {
+export const UpdateStatusModal = (props: { status: string; id: string }) => {
   const { status, id } = props;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(status);

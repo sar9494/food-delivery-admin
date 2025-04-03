@@ -30,7 +30,9 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     queryKey: ["foodOrders"],
     queryFn: async () => {
       setIsLoading(true);
-      const response = await axios.get("http://localhost:4000/foodOrders");
+      const response = await axios.get(
+        "https://food-delivery-service-bx3v.onrender.com/foodOrders"
+      );
       setIsLoading(false);
       return response.data;
     },
@@ -39,7 +41,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const response = await axios.put(
-        "http://localhost:4000/foodOrders",
+        "https://food-delivery-service-bx3v.onrender.com/foodOrders",
         newStatus
       );
       await refetch();

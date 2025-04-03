@@ -14,7 +14,10 @@ export const updateFoodInfo = async (
   console.log(newInfo);
   try {
     setIsUploading(true);
-    const response = await axios.put("http://localhost:4000/foods", newInfo);
+    const response = await axios.put(
+      "https://food-delivery-service-bx3v.onrender.com/foods",
+      newInfo
+    );
     console.log(response.data);
 
     return response.data;
@@ -25,8 +28,11 @@ export const updateFoodInfo = async (
   }
 };
 export const deleteFood = async (param: { id: string }) => {
-  const response = await axios.delete("http://localhost:4000/foods", {
-    data: param,
-  });
+  const response = await axios.delete(
+    "https://food-delivery-service-bx3v.onrender.com/foods",
+    {
+      data: param,
+    }
+  );
   return response.data;
 };

@@ -43,22 +43,30 @@ export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
   } = useQuery({
     queryKey: ["foods"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:4000/foods");
+      const response = await axios.get(
+        "https://food-delivery-service-bx3v.onrender.com/foods"
+      );
       return response.data;
     },
   });
 
   const deleteFood = async (param: { id: string }) => {
-    const response = await axios.delete("http://localhost:4000/foods", {
-      data: param,
-    });
+    const response = await axios.delete(
+      "https://food-delivery-service-bx3v.onrender.com/foods",
+      {
+        data: param,
+      }
+    );
     await refetch();
     return response.data;
   };
   const updateFoodInfo = async (newInfo: FoodSchema) => {
     console.log(newInfo);
     try {
-      const response = await axios.put("http://localhost:4000/foods", newInfo);
+      const response = await axios.put(
+        "https://food-delivery-service-bx3v.onrender.com/foods",
+        newInfo
+      );
       console.log(response.data);
       await refetch();
       return response.data;

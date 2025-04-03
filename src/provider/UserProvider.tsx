@@ -17,8 +17,8 @@ type UserContextType = {
     phoneNumber?: number;
     address?: string;
     orderItem?: { food: string; quantity: number };
-  }) => Promise<any>;
-  getUser: (id: { id: string }) => Promise<any>;
+  }) => Promise<unknown>;
+  getUser: (id: { id: string }) => Promise<unknown>;
 };
 const UserContext = createContext<UserContextType>({} as UserContextType);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -60,7 +60,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     orderItem?: { food: string; quantity: number };
   }) => {
     try {
-      await axios.put("http://localhost:4000/user", values);
+      await axios.put(
+        "https://food-delivery-service-bx3v.onrender.com/user",
+        values
+      );
       getUserData();
     } catch (error) {
       console.log(error);
@@ -68,9 +71,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
   const gerUser = async (id: { id: string }) => {
     try {
-      const response = await axios.post("http://localhost:4000/user", {
-        id: id,
-      });
+      const response = await axios.post(
+        "https://food-delivery-service-bx3v.onrender.com/user",
+        {
+          id: id,
+        }
+      );
       return response.data;
     } catch (error) {
       console.log(error);

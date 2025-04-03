@@ -15,7 +15,7 @@ type CategoryContextType = {
   categories: Category[];
   refetch: (
     options?: RefetchOptions
-  ) => Promise<QueryObserverResult<any, Error>>;
+  ) => Promise<QueryObserverResult<unknown, Error>>;
   isLoading: boolean;
   addCategory: ({ categoryName }: { categoryName: string }) => void;
 };
@@ -34,14 +34,19 @@ export const CategoryProvider = ({
   } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:4000/category");
+      const response = await axios.get(
+        "https://food-delivery-service-bx3v.onrender.com/category"
+      );
       return response.data;
     },
   });
   const addCategory = async ({ categoryName }: { categoryName: string }) => {
-    const response = await axios.post("http://localhost:4000/category", {
-      categoryName: categoryName,
-    });
+    await axios.post(
+      "https://food-delivery-service-bx3v.onrender.com/category",
+      {
+        categoryName: categoryName,
+      }
+    );
     await refetch();
   };
 

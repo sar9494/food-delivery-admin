@@ -12,10 +12,13 @@ export const LogIn = () => {
   const logInHandler = async (values: { email: string; password: string }) => {
     const { email, password } = values;
     try {
-      const response = await axios.post("http://localhost:4000/user/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "https://food-delivery-service-bx3v.onrender.com/user/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
       console.log(response.data);
 
       if (response.data.token) {
