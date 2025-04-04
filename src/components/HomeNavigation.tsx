@@ -6,7 +6,7 @@ export const HomeNaviagtion = () => {
       <div className="flex flex-col gap-3">
         <HomeSwitchButton name="food-menu" />
         <HomeSwitchButton name="orders" />
-        <HomeSwitchButton name="settings" />
+        {/* <HomeSwitchButton name="settings" /> */}
       </div>
     </div>
   );
