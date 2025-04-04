@@ -16,7 +16,7 @@ export const Dishes = () => {
             <div className="flex gap-5  flex-wrap">
               <AddDishButton id={e._id} name={e.categoryName} />
               {isLoading ? (
-                <div>Loading ...</div>
+                <div>...Loading</div>
               ) : (
                 foods
                   ?.filter((el: Food) => el.category.id === e._id)
@@ -29,7 +29,7 @@ export const Dishes = () => {
                         <div className="w-full h-3/5 rounded-lg flex  gap-5 relative">
                           <img
                             src={el.image}
-                            alt=""
+                            alt="food image"
                             className="rounded-lg w-full object-cover"
                           />
                           <UpdateFoodPage food={el} />

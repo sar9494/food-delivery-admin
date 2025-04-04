@@ -11,7 +11,7 @@ type UserType = {
   orderedFoods: string[];
 };
 type UserContextType = {
-  user: UserType;
+  users: UserType[];
   handleLogout: () => void;
   updateUserInfo: (values: {
     token: string | null;
@@ -24,8 +24,8 @@ type UserContextType = {
 const UserContext = createContext<UserContextType>({} as UserContextType);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const { data: user } = useQuery({
-    queryKey: ["foods"],
+  const { data: users } = useQuery({
+    queryKey: ["user"],
     queryFn: async () => {
       const response = await axios.get(
         "https://food-delivery-service-bx3v.onrender.com/user"
@@ -72,13 +72,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <UserContext.Provider
       value={{
-        user: user,
+        users: users,
         handleLogout: handleLogout,
         updateUserInfo: updateUserInfo,
         getUser: gerUser,
       }}
     >
-      {user ? <div>...loading</div> : children}
+      {users ? <div>...loading</div> : children}
     </UserContext.Provider>
   );
 };

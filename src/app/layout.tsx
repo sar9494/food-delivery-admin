@@ -5,14 +5,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
-import { HomeNaviagtion } from "@/components";
-import { Profile } from "@/components/Profile";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import { OrderProvider } from "@/provider/OrderProvider";
 import { LoaderProvider } from "@/provider/LoadingProvider";
+import { AuthProvider } from "@/provider/AuthProvider";
 
 const queryClient = new QueryClient();
 const geistSans = Geist({
@@ -39,9 +37,6 @@ export default function RootLayout({
         router.push("/login");
         return;
       }
-
-      const tokenData = jwtDecode(token);
-      console.log(tokenData);
     } catch (error) {
       console.error("Error validating token:", error);
       router.push("/login");
@@ -53,20 +48,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryClientProvider client={queryClient}>
-          <LoaderProvider>
-            <OrderProvider>
-              <div className="flex">
-                <HomeNaviagtion />
-                <div className="bg-gray-200 p-5 w-full h-screen">
-                  <div className="w-full flex justify-end">
-                    <Profile />
+          <AuthProvider>
+            <LoaderProvider>
+              <OrderProvider>
+                <div className="flex">
+                  <div className="bg-gray-200 p-5 w-full h-screen">
+                    <div className="overflow-scroll h-screen">{children}</div>
+                    <ToastContainer />
                   </div>
-                  {children}
-                  <ToastContainer />
                 </div>
-              </div>
-            </OrderProvider>
-          </LoaderProvider>
+              </OrderProvider>
+            </LoaderProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </body>
     </html>
